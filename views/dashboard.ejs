@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html lang="fr">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Dashbord</title>
+  </head>
+  <body>
+    <h1>Tableau de bord de <%= user.username %></h1>
+    <section>
+      <h2>Utilisateur</h2>
+      <a href="/dashboard/edit-profile/<%= user._id %>">Editer le Profil</a>
+      
+      <form action="/dashboard/delete-profile/<%= user._id %>?_method=DELETE" method="POST">
+        <button type="submit" class="delete-button">Delete Profile</button>
+      </form>
+    </section>
+    <a href="/">Page d'accueil</a>
+  </body>
+</html>
