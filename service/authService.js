@@ -1,4 +1,5 @@
 const User = require("../models/user");
+const Catway = require('../models/catways')
 const bcrypt = require("bcryptjs");
 const jwt = require("jsonwebtoken");
 
@@ -87,8 +88,11 @@ exports.getDashboard = async (req, res) => {
       return res.status(404).json({ message: 'User not found' });
     }
 
+    // Récupération des catways à partir de la base de données
+    const catways = await Catway.find();
+
     //Si décodage reussi envoie sur la page dashbord
-    res.render("dashboard", { user });
+    res.render("dashboard", { catways ,user , catway: null });
     console.log('User ID:', decoded.userId);
   } catch ( error ) {
     res.clearCookie('token');

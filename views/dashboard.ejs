@@ -10,10 +10,79 @@
     <section>
       <h2>Utilisateur</h2>
       <a href="/dashboard/edit-profile/<%= user._id %>">Editer le Profil</a>
-      
+
       <form action="/dashboard/delete-profile/<%= user._id %>?_method=DELETE" method="POST">
-        <button type="submit" class="delete-button">Delete Profile</button>
+        <button type="submit">Delete Profile</button>
       </form>
+    </section>
+
+    <section>
+      <h2>Catways</h2>
+      <section>
+        <h3>Créer un Catway</h3>
+        <form action="/dashboard/create-catway" method="POST">
+          <label for="catwayNumber">Numéro de catway</label>
+          <input type="text" name="catwayNumber" id="catwayNumber" />
+
+          <label for="type">Numéro de catway</label>
+          <select name="type" id="type" required>
+            <option value="long">Long</option>
+            <option value="short">Short</option>
+          </select>
+
+          <label for="catwayState">Etat du catway</label>
+          <input type="text" name="catwayState" id="catwayState" required>
+      
+          <button type="submit">Créer un catway</button>
+        </form>
+
+        <h3>Modifier un catway</h3>
+        <table>
+          <thead>
+            <tr>
+              <th>Numéro de catway</th>
+              <th>Nouvel état</th>
+            </tr>
+          </thead>
+          <tbody>
+            <% catways.forEach(catway => { %>
+              <tr>
+                <form action="/dashboard/edit-catway/<%= catway.catwayNumber %>?_method=PATCH" method="POST">
+                  <td>
+                    <label for="catwayState-<%= catway.catwayNumber %>"> Catway N° : <%= catway.catwayNumber %>:</label>
+                  </td>
+                  <td> 
+                    <input type="text" name="catwayState" id="catwayState-<%= catway.catwayNumber %>" >
+                  </td>
+                
+                  <td><button type="submit">Modifier</button></td>
+                </form>
+                  <td>
+                    <form action="/dashboard/delete-catway/<%= catway.catwayNumber %>?_method=DELETE" method="POST">
+                      <button type="submit">Supprimer</button>
+                    </form>
+                  </td>
+                  
+                  <td>
+                    <form action="/dashboard/catway/<%= catway.catwayNumber %>" method="get">
+                      <button type="submit">Voir le detail</button>
+                    </form>
+                  </td>
+                  
+                </tr>
+            <% }); %>
+          </tbody>
+        </table>
+        
+    <!-- Affichage des détails du catway -->
+    <% if (catway) { %>
+      <h3>Détails du Catway N°: <%= catway.catwayNumber %></h3>
+      <p><strong>Type:</strong> <%= catway.type %></p>
+      <p><strong>Etat:</strong> <%= catway.catwayState %></p>
+    <% } %>
+
+        <a href="/dashboard/catways">Liste des Catways</a>
+      </section>
     </section>
     <a href="/">Page d'accueil</a>
   </body>
