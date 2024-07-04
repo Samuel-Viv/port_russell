@@ -4,8 +4,15 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Dashbord</title>
+    <style>
+      .reservation-form {
+        display: none;
+        margin-top: 20px;
+      }
+    </style>
   </head>
   <body>
+    <main>
     <h1>Tableau de bord de <%= user.username %></h1>
     <section>
       <h2>Utilisateur</h2>
@@ -31,12 +38,14 @@
           </select>
 
           <label for="catwayState">Etat du catway</label>
-          <input type="text" name="catwayState" id="catwayState" required>
-      
+          <input type="text" name="catwayState" id="catwayState" required />
+
           <button type="submit">Créer un catway</button>
         </form>
+      </section>
 
-        <h3>Modifier un catway</h3>
+      <section>
+        <h3>Modifier un catway et faire une réservation</h3>
         <table>
           <thead>
             <tr>
@@ -46,44 +55,95 @@
           </thead>
           <tbody>
             <% catways.forEach(catway => { %>
-              <tr>
-                <form action="/dashboard/edit-catway/<%= catway.catwayNumber %>?_method=PATCH" method="POST">
-                  <td>
-                    <label for="catwayState-<%= catway.catwayNumber %>"> Catway N° : <%= catway.catwayNumber %>:</label>
-                  </td>
-                  <td> 
-                    <input type="text" name="catwayState" id="catwayState-<%= catway.catwayNumber %>" >
-                  </td>
-                
-                  <td><button type="submit">Modifier</button></td>
+            <tr>
+              <form
+                action="/dashboard/edit-catway/<%= catway.catwayNumber %>?_method=PATCH"
+                method="POST"
+              >
+                <td>
+                  <label for="catwayState-<%= catway.catwayNumber %>">
+                    Catway N° : <%= catway.catwayNumber %>:</label
+                  >
+                </td>
+                <td>
+                  <input
+                    type="text"
+                    name="catwayState"
+                    id="catwayState-<%= catway.catwayNumber %>"
+                  />
+                </td>
+
+                <td><button type="submit">Modifier</button></td>
+              </form>
+              <td>
+                <form
+                  action="/dashboard/delete-catway/<%= catway.catwayNumber %>?_method=DELETE"
+                  method="POST"
+                >
+                  <button type="submit">Supprimer</button>
                 </form>
-                  <td>
-                    <form action="/dashboard/delete-catway/<%= catway.catwayNumber %>?_method=DELETE" method="POST">
-                      <button type="submit">Supprimer</button>
-                    </form>
-                  </td>
-                  
-                  <td>
-                    <form action="/dashboard/catway/<%= catway.catwayNumber %>" method="get">
-                      <button type="submit">Voir le detail</button>
-                    </form>
-                  </td>
-                  
-                </tr>
+              </td>
+
+              <td>
+                <form action="/dashboard/catway/<%= catway.catwayNumber %>" method="get">
+                  <button type="submit">Voir le detail</button>
+                </form>
+              </td>
+
+              <td>
+                <button onclick="toggleReservationForm('<%= catway.catwayNumber %>')">Réserver</button>
+              </td>
+
+            </tr>
             <% }); %>
           </tbody>
         </table>
-        
-    <!-- Affichage des détails du catway -->
-    <% if (catway) { %>
-      <h3>Détails du Catway N°: <%= catway.catwayNumber %></h3>
-      <p><strong>Type:</strong> <%= catway.type %></p>
-      <p><strong>Etat:</strong> <%= catway.catwayState %></p>
-    <% } %>
+    </section>
+
+
+        <!-- Affichage des détails du catway -->
+        <% if (catway) { %>
+        <h3>Détails du Catway N°: <%= catway.catwayNumber %></h3>
+        <p><strong>Type:</strong> <%= catway.type %></p>
+        <p><strong>Etat:</strong> <%= catway.catwayState %></p>
+        <% } %>
+
+        <!-- Afficher le formulaire de reservation -->
+        <% catways.forEach(catway => { %>
+        <div id="reservation-form-<%= catway.catwayNumber %>" class="reservation-form">
+          <h3>Réserver le Catway N°: <%= catway.catwayNumber %></h3>
+          <form action="/dashboard/catway/<%= catway.catwayNumber %>/reservation" method="POST">
+            <label for="clientName">Nom du client</label>
+            <input type="text" name="clientName" id="clientName" required />
+
+            <label for="boatName">Nom du bateau</label>
+            <input type="text" name="boatName" id="boatName" required />
+
+            <label for="checkIn">Date de début (Check-In)</label>
+            <input type="date" name="checkIn" id="checkIn" required />
+
+            <label for="checkOut">Date de fin (Check-Out)</label>
+            <input type="date" name="checkOut" id="checkOut" required />
+
+            <button type="submit">Réserver</button>
+          </form>
+        </div>
+        <% }); %>
 
         <a href="/dashboard/catways">Liste des Catways</a>
       </section>
     </section>
+    <a href="/dashboard/reservations">Liste des réservation</a>
     <a href="/">Page d'accueil</a>
+  </main>
+    <script>
+      function toggleReservationForm(catwayNumber) {
+        const form = document.getElementById(`reservation-form-${catwayNumber}`);
+        if (form) {
+          form.style.display = form.style.display === "block" ? "none" : "block";
+        }
+      }
+    </script>
+
   </body>
 </html>

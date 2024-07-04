@@ -1,5 +1,6 @@
 const User = require("../models/user");
-const Catway = require('../models/catways')
+const Catway = require('../models/catways');
+const Reservation = require('../models/reservation');
 const bcrypt = require("bcryptjs");
 const jwt = require("jsonwebtoken");
 
@@ -67,7 +68,7 @@ exports.postLogin = async (req, res) => {
 };
 
 
-//Parite dashboard
+//Partie dashboard
 
 exports.getDashboard = async (req, res) => {
   //recupération du token dans les cookies
