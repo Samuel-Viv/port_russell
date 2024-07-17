@@ -1,5 +1,13 @@
 const mongoose = require('mongoose')
 
+/**
+ * Catway schema
+ * @typedef {Object} Catway
+ * @property {number} catwayNumber
+ * @property {string} type
+ * @property {string} catwayState
+ * 
+ */
 const catwaysSchema = new mongoose.Schema({
     catwayNumber:{
         type: Number,

@@ -11,6 +11,7 @@
         <table>
             <thead>
                 <tr>
+                    <th>Id de la reservation</th>
                     <th>Numéro de catway</th>
                     <th>Nom du client</th>
                     <th>Nom du bateau</th>
@@ -22,6 +23,7 @@
             <tbody>
                 <% reservations.forEach(reservation => { %>
                   <tr>
+                    <td><%= reservation._id %></td>
                     <td><%= reservation.catwayNumber %></td>
                     <td><%= reservation.clientName %></td>
                     <td><%= reservation.boatName %></td>

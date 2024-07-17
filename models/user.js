@@ -1,6 +1,15 @@
 const mongoose = require('mongoose');
 const bcrypt = require('bcryptjs');
 
+/**
+ * User schema
+ * @typedef {Object} User
+ * @property {string} username
+ * @property {string} email
+ * @property {string} password
+ * @property {date} createdAt
+ * @property {date} updatedAt
+ */
 const userSchema = new mongoose.Schema({
     username:{
         type:String,
