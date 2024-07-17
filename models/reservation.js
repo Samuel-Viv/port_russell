@@ -3,9 +3,8 @@ const mongoose = require('mongoose');
 
 const reservationSchema = new mongoose.Schema({
     catwayNumber:{
-        type: String,
+        type: Number,
         required: true,
-        ref: "Catway"
     },
     clientName:{
         type: String,

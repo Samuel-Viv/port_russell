@@ -1,6 +1,4 @@
 const Catway = require("../models/catways");
-const User = require("../models/user");
-const jwt = require('jsonwebtoken');
 
 //Méthode d'ajout de catway
 exports.addCatway = async (req, res) => {
@@ -40,68 +38,48 @@ exports.listCatways = async (req, res) => {
 
 //Méthode pour le formulaire de modification par rapport à l'id
 exports.updateCatwayById = async (req, res) => {
-  const { catwayState } = req.body;
   try {
-    const catway = await Catway.findOne({ catwayNumber: req.params.catwayNumber });
+    const catway = await Catway.findOneAndUpdate(
+      req.params.catwayNumber,
+      { catwayState: req.body.catwayState },
+      { new: true }
+    );
     if (!catway) {
-      return res.status(404).json({ message: "Catway not found!" });
+      return res.status(404).json({ message: "Catway not found" });
     }
-    catway.catwayState = catwayState;
-
-    await catway.save();
-    res.redirect("/dashboard");
-  } catch (error) {
-    console.log(error);
-    res.status(500).json(error);
+    res.redirect('/dashboard');
+  } catch (err) {
+    res.status(500).send(err);
   }
 };
 
 //Route delete catway
 exports.deleteCatway = async (req, res) => {
   try {
-    const catway = await Catway.findOne({ catwayNumber: req.params.catwayNumber });
+    //recupération de l'id dans la requete
+    const catwayNumber = req.body;
 
-    if (!catway) {
-      return res.status(404).json({ message: "Catway not found" });
-    }
-
-    await Catway.deleteOne({ catwayNumber: req.params.catwayNumber });
+    const catway = await Catway.findOneAndDelete(catwayNumber);
+    if (!catway) return res.status(404).send("Catway not found");
+     //redirection au dashbord
     res.redirect("/dashboard");
-  } catch (error) {
-    console.error(error);
-    res.status(500).send("Server Error");
-    
+  } catch (err) { 
+    res.status(500).send(err);
   }
 };
 
 exports.detailCatway = async (req, res) => {
-    try {
-      const catwayNumber = req.params.catwayNumber;
-      //Rechercher un catway correspond dans la base de donné par rapport à sin catwayNumber
-      const catway = await Catway.findOne({ catwayNumber });
-      //Verification du catway si il existe
-      if (!catway) {
-        return res.status(404).json({ message: "Catway not found" });
-      }
-      //Récupération du token depuis les cookies
-      const token = req.cookies.token;
-      if (!token) {
-        return res.redirect('/');
-      }
-      //Décodage du JWT
-      const decoded = jwt.verify(token, process.env.JWT_SECRET);
-      //Récupération des info de l'utilsateur
-      const user = await User.findById(decoded.userId).select('-password');
-      
-      if (!user) {
-        return res.status(404).json({ message: 'User not found' });
-      }
-      //Récupération de tout les catways
-      const catways = await Catway.find();
-      //Afficher sur le dashbord
-      res.render('dashboard', { catways, user, catway });
-    } catch (error) {
-      console.error('Error fetching catway details:', error);
-      res.status(500).send('Server Error');
+  try {
+    //recupération de l'id dans la requete
+    const catwayNumber = req.query;
+    //Verification des catway par rapport a l'id enregistré
+    const catway = await Catway.findOne(catwayNumber);
+    if (!catway) {
+      return res.status(404).json({ message: "Catway not found" });
     }
+    console.log(catway);
+    res.render("catwayDetail", { catway });
+  } catch (err) {
+    res.status(500).send(err);
+  }
   };

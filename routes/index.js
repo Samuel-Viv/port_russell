@@ -8,8 +8,6 @@ router.get("/", function (req, res, next) {
   res.render("index", { title: "Express" });
 });
 
-router.get("/register", authService.getRegister);
-
 router.post("/register", authService.postRegister);
 
 router.post('/login',authService.postLogin)
