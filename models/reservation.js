@@ -1,6 +1,15 @@
 const mongoose = require('mongoose');
 
-
+/**
+ * Reservation schema
+ * @typedef {Object} Reservation
+ * @property {number} catwayNumber
+ * @property {string} clientName
+ * @property {string} boatName
+ * @property {date} checkIn
+ * @property {date} checkOut
+ * 
+ */
 const reservationSchema = new mongoose.Schema({
     catwayNumber:{
         type: Number,
