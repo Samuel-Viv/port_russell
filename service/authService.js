@@ -1,6 +1,6 @@
 const User = require("../models/user");
-const Catway = require('../models/catways');
-const Reservation = require('../models/reservation');
+const Catway = require("../models/catways");
+const Reservation = require("../models/reservation");
 const bcrypt = require("bcryptjs");
 const jwt = require("jsonwebtoken");
 
@@ -25,15 +25,9 @@ exports.postRegister = async (req, res) => {
     res.redirect("/");
   } catch (error) {
     console.log(error);
-    res.redirect("/register");
+    res.redirect("/dashboard");
   }
 };
-
-exports.getRegister = (req, res) => {
-  res.render("register");
-};
-
-
 
 //Partie Login
 
@@ -67,38 +61,35 @@ exports.postLogin = async (req, res) => {
   }
 };
 
-
 //Partie dashboard
 
 exports.getDashboard = async (req, res) => {
   //recupération du token dans les cookies
-  const token = req.cookies.token
+  const token = req.cookies.token;
   //si le token est different retourne a la page d'accueil
-  if(!token){
-    return res.redirect('/')
+  if (!token) {
+    return res.redirect("/");
   }
-  try{
+  try {
     //Verification et docodage du token
     const decoded = jwt.verify(token, process.env.JWT_SECRET);
 
     // Récupérer les informations de l'utilisateur à partir de la base de données
-    const user = await User.findById(decoded.userId).select('-password');
-    
+    const user = await User.findById(decoded.userId).select("-password");
+
     // Vérifier si l'utilisateur existe
     if (!user) {
-      return res.status(404).json({ message: 'User not found' });
+      return res.status(404).json({ message: "User not found" });
     }
-
-    // Récupération des catways à partir de la base de données
-    const catways = await Catway.find();
+           // Récupérer tous les catways pour les afficher dans le tableau de bord
+           const catways = await Catway.find();
 
     //Si décodage reussi envoie sur la page dashbord
-    res.render("dashboard", { catways ,user , catway: null });
-    console.log('User ID:', decoded.userId);
-  } catch ( error ) {
-    res.clearCookie('token');
-    res.redirect('/login');
-    console.log(error)
+    res.render("dashboard", {user, catways});
+    console.log("User ID:", decoded.userId);
+  } catch (error) {
+    res.clearCookie("token");
+    res.redirect("/login");
+    console.log(error);
   }
-
-}
+};

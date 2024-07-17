@@ -2,23 +2,6 @@ const User = require("../models/user");
 const bcrypt = require("bcryptjs");
 const jwt = require("jsonwebtoken");
 
-//Partie user
-
-exports.getUserById = async (req, res) => {
-  try {
-    const user = await User.findById(req.params.id).select("-password");
-
-    if (!user) {
-      return res.status(404).json({ message: "User not found" });
-    }
-
-    res.render("edit-profile", { user });
-  } catch (error) {
-    console.log(error);
-    res.redirect("/login");
-  }
-};
-
 exports.updateUserById = async (req, res) => {
   //Récupération des champs dans le corp de la requete
   const { username, email, password } = req.body;

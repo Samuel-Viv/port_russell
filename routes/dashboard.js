@@ -14,21 +14,21 @@ router.get("/", authService.getDashboard);
 
 
 //Route utilisateur
-// Route pour afficher le formulaire d'édition du profil
-router.get('/edit-profile/:id', private, userService.getUserById);
-router.put('/edit-profile/:id',private, userService.updateUserById);
+router.put('/user/:id',private, userService.updateUserById);
 router.delete('/delete-profile/:id', private,userService.deleteUserById);
 
 //Route catway
 router.get('/catways', private,catwayServices.listCatways); //Route Liste des catways
-router.get('/catway/:catwayNumber',private, catwayServices.detailCatway);
-router.post('/create-catway', private,catwayServices.addCatway ); 
-router.patch('/edit-catway/:catwayNumber', private,catwayServices.updateCatwayById);
-router.delete('/delete-catway/:catwayNumber',private, catwayServices.deleteCatway);
+router.post('/catways', private,catwayServices.addCatway ); 
+router.get('/catways/:id', private, catwayServices.detailCatway);
+router.patch('/catways/:id', private,catwayServices.updateCatwayById);
+router.delete('/catways/:id', private, catwayServices.deleteCatway);
 
 //Route reservation
-router.post('/catway/:catwayNumber/reservation',private , reservationSevice.reservByIdCatway);
-router.get('/reservations',private ,reservationSevice.reservationList)
-
+router.get('/reservations', private, reservationSevice.listeReservations)
+router.post('/catways/:id/reservations', private, reservationSevice.createReservation);
+router.get('/catways/:id/reservations', private, reservationSevice.listReservationsByCatway);
+router.get('/catways/:id/reservations/:idReservation', private, reservationSevice.getReservationById);
+router.delete('/catways/:id/reservations/:idReservation', private, reservationSevice.deleteReservation);
 
 module.exports = router;
