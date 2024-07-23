@@ -4,6 +4,12 @@ const User = require("../models/user");
 const jwt = require("jsonwebtoken");
 
 // Créer une nouvelle réservation
+/**
+ * Création d'un reservation
+ * @param {Object} req - Objet de la requete http
+ * @param {Object} res - Objet de la reponse http
+ * @return {Object} - Réservation créée
+ */
 exports.createReservation = async (req, res) => {
   const reservation = new Reservation({
     catwayNumber: req.body.catwayNumber,
@@ -22,6 +28,12 @@ exports.createReservation = async (req, res) => {
 };
 
 // Lister les réservations pour un catway spécifique
+/**
+ * Liste des catways pour un catway spécifique
+ * @param {Object} req - Objet de la requete http
+ * @param {Object} res - Objet de la reponse http
+ * @return {Object} - Liste des reservation pour un catway
+ */
 exports.listReservationsByCatway = async (req, res) => {
   try {
     //recupération de l'id dans la requete
@@ -43,6 +55,12 @@ exports.listReservationsByCatway = async (req, res) => {
 
 
 // Obtenir une réservation par ID
+/**
+ * Detaild e la reservation par rapport au catway et son id 
+ * @param {Object} req - Objet de la requete http
+ * @param {Object} res - Objet de la reponse http
+ * @return {Object} - Detail de la reservation
+ */
 exports.getReservationById = async (req, res) => {
   try {
     const catwayNumber = req.query.catwayNumber;
@@ -66,6 +84,12 @@ exports.getReservationById = async (req, res) => {
   }
 };
 
+/**
+ * Suppression de la reservation
+ * @param {Object} req - Objet de la requete http
+ * @param {Object} res - Objet de la reponse http
+ * @return {Object} - reservation supprimée
+ */
 exports.deleteReservation = async (req, res) => {
   try {
     const catwayNumber = req.body.catwayNumber;
@@ -89,6 +113,12 @@ exports.deleteReservation = async (req, res) => {
   }
 };
 
+/**
+ * Liste des reservations
+ * @param {Object} req - Objet de la requete http
+ * @param {Object} res - Objet de la reponse http
+ * @return {Object} - Liste des reservation
+ */
 exports.listeReservations = async (req, res) => {
   try {
     const reservations = await Reservation.find();

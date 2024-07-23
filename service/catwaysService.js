@@ -1,6 +1,12 @@
 const Catway = require("../models/catways");
 
 //Méthode d'ajout de catway
+/**
+ * Création d'un catway
+ * @param {Object} req - Object de la requete http 
+ * @param {Object} res - Object de la reponse http
+ * @returns {Object} - Catway créé
+ */
 exports.addCatway = async (req, res) => {
   try {
     //recupération des champs dans le corp de la requete
@@ -25,7 +31,14 @@ exports.addCatway = async (req, res) => {
   }
 };
 
+
 //Méthode pour afficher la liste des catway
+/**
+ * Liste des catways
+ * @param {Object} req - Object de la requete http 
+ * @param {Object} res - Object de la reponse http
+ * @returns {Object} - Liste des catways
+ */
 exports.listCatways = async (req, res) => {
   try {
     const catways = await Catway.find();
@@ -37,6 +50,12 @@ exports.listCatways = async (req, res) => {
 };
 
 //Méthode pour le formulaire de modification par rapport à l'id
+/**
+ * Modification d'un catway
+ * @param {Object} req - Object de la requete http 
+ * @param {Object} res - Object de la reponse http
+ * @returns {Object} - Catway modifié
+ */
 exports.updateCatwayById = async (req, res) => {
   try {
     const catway = await Catway.findByIdAndUpdate(
@@ -54,6 +73,12 @@ exports.updateCatwayById = async (req, res) => {
 };
 
 //Route delete catway
+/**
+ * Suppréssion d'un catway
+ * @param {Object} req - Object de la requete http 
+ * @param {Object} res - Object de la reponse http
+ * @returns {Object} - Catway supprimer
+ */
 exports.deleteCatway = async (req, res) => {
   try {
     //recupération de l'id dans la requete
@@ -68,6 +93,13 @@ exports.deleteCatway = async (req, res) => {
   }
 };
 
+//Detail d'un catway
+/**
+ * Récupération d'un catway
+ * @param {Object} req - Object de la requete http 
+ * @param {Object} res - Object de la reponse http
+ * @returns {Object} - Detail du Catway N°
+ */
 exports.detailCatway = async (req, res) => {
   try {
     //recupération de l'id dans la requete
