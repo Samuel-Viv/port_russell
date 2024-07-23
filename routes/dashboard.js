@@ -18,10 +18,10 @@ router.put('/user/:id',private, userService.updateUserById);
 router.delete('/delete-profile/:id', private,userService.deleteUserById);
 
 //Route catway
-router.get('/catways', private,catwayServices.listCatways); //Route Liste des catways
+router.get('/catways',catwayServices.listCatways); //Route Liste des catways
 router.post('/catways', private,catwayServices.addCatway ); 
-router.get('/catways/:id', private, catwayServices.detailCatway);
-router.patch('/catways/:id', private,catwayServices.updateCatwayById);
+router.get('/catways/:id', catwayServices.detailCatway);
+router.patch('/catways/:id',catwayServices.updateCatwayById);
 router.delete('/catways/:id', private, catwayServices.deleteCatway);
 
 //Route reservation
