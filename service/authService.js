@@ -6,6 +6,13 @@ const jwt = require("jsonwebtoken");
 
 //Partie Register
 
+/**
+ * Création d'un utilisateur
+ * @param {object} req - Objet de la requete http
+ * @param {object} res - Objet de la reponse http
+ * @returns - Utilisateur créé
+ */
+
 exports.postRegister = async (req, res) => {
   try {
     //recupération des champs dans le corp de la requete
@@ -30,6 +37,12 @@ exports.postRegister = async (req, res) => {
 };
 
 //Partie Login
+/**
+ *  Envoye des idantifants de connexion
+ * @param {object} req - Objet de la requete http
+ * @param {object} res - Objet de la response http
+ * @returns - connexion au dashboard
+ */
 
 exports.postLogin = async (req, res) => {
   //Recupération des champs dans le corp de la requete
