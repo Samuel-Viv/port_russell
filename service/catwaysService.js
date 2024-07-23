@@ -18,7 +18,7 @@ exports.addCatway = async (req, res) => {
     await newCatway.save();
     console.log(newCatway);
     //redirection au dashbord
-    res.redirect("/dashboard/catways");
+    res.status(201).redirect("/dashboard/catways");
   } catch (error) {
     console.error(error);
     res.status(501).json(error);
@@ -29,7 +29,7 @@ exports.addCatway = async (req, res) => {
 exports.listCatways = async (req, res) => {
   try {
     const catways = await Catway.find();
-    res.render("catways", { catways });
+    res.status(200).render("catways", { catways });
   } catch (error) {
     console.error(error);
     res.status(500).json(error);
@@ -39,9 +39,9 @@ exports.listCatways = async (req, res) => {
 //Méthode pour le formulaire de modification par rapport à l'id
 exports.updateCatwayById = async (req, res) => {
   try {
-    const catway = await Catway.findOneAndUpdate(
-      req.params.catwayNumber,
-      { catwayState: req.body.catwayState },
+    const catway = await Catway.findByIdAndUpdate(
+      req.params.id,
+      {catwayState: req.body.catwayState },
       { new: true }
     );
     if (!catway) {
@@ -78,7 +78,7 @@ exports.detailCatway = async (req, res) => {
       return res.status(404).json({ message: "Catway not found" });
     }
     console.log(catway);
-    res.render("catwayDetail", { catway });
+    res.status(200).render("catwayDetail", { catway });
   } catch (err) {
     res.status(500).send(err);
   }

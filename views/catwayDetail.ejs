@@ -12,7 +12,7 @@
   <p>State: <%= catway.catwayState %></p>
 
   <!-- Formulaire pour mettre à jour la description de l'état du catway -->
-  <form action="/dashboard/catways/<%= catway.catwayNumber %>?_method=PATCH" method="post">
+  <form action="/dashboard/catways/<%= catway._id %>?_method=PATCH" method="post">
     <h3>Mettre à jour l'état du catway</h3>
     <input type="text" name="catwayState" value="<%= catway.catwayState %>" required>
     <button type="submit">Mettre à jour</button>

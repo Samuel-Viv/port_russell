@@ -34,7 +34,7 @@ exports.listReservationsByCatway = async (req, res) => {
 
     const reservations = await Reservation.find({ catwayNumber: catway.catwayNumber });
     console.log(catway);
-    res.render("reservationsCatway", { catway, reservations });
+    res.status(200).render("reservationsCatway", { catway, reservations });
   } catch (err) {
     res.status(500).send(err);
   }
@@ -60,7 +60,7 @@ exports.getReservationById = async (req, res) => {
     }
 
     console.log('Catway:'+ catway, 'Reservation: ' + reservation);
-    res.render('reservationDetail',{ reservation, catway });
+    res.status(200).render('reservationDetail',{ reservation, catway });
   } catch (error) {
     res.status(500).json({ message: error.message });
   }
