@@ -20,7 +20,9 @@
     "mongodb-memory-server": "^9.4.1",
     "mongoose": "^8.4.4",
     "morgan": "~1.9.1",
-    "save-dev": "^0.0.1-security"
+    "save-dev": "^0.0.1-security",
+    "swagger-jsdoc": "^6.2.8",
+    "swagger-ui-express": "^5.0.1"
   },
   "devDependencies": {
     "dotenv": "^16.4.5",
