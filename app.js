@@ -5,6 +5,7 @@ var cookieParser = require('cookie-parser');
 var logger = require('morgan');
 require('dotenv').config();
 const methodOverride = require('method-override')
+const {swaggerUi, swaggerDocs} = require('./config/swagger')
 
 var indexRouter = require('./routes/index');
 const dashboardRouter = require('./routes/dashboard')
@@ -28,6 +29,7 @@ app.use(methodOverride('_method'));
 
 app.use('/', indexRouter);
 app.use('/dashboard', dashboardRouter)
+app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerDocs));
 
 // catch 404 and forward to error handler 
 app.use(function(req, res, next) {
